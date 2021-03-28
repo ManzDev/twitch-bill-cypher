@@ -1,4 +1,5 @@
-const audio = new Audio("/gravity.mp3");
+import gravityTheme from "./assets/gravity.mp3";
+const audio = new Audio(gravityTheme);
 const offPieces = [
   { name: ".hat-container", delay: 1000 },
   { name: ".eye", delay: 2000 },
