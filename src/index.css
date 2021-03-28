@@ -1,0 +1,378 @@
+:root {
+  --dark-color: #000;
+  --body-color: #ffff59;
+  --dark-body-color: #f6ec3b;
+  --light-color: #fff;
+  --shine-light-color: #f6f6db;
+  --shine-body-color: #fbfbc8;
+  --shine-filter:
+    drop-shadow(2px 2px 2px var(--shine-light-color))
+    drop-shadow(-2px -2px 2px var(--shine-light-color))
+    drop-shadow(0 0 4px var(--shine-body-color))
+    drop-shadow(0 0 4px var(--shine-body-color));
+}
+
+body {
+  margin: 0;
+  background: rgb(44, 44, 44);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 3em;
+  height: 100vh;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  background: url(/gravity-falls.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: filter 6s;
+}
+
+.container::after {
+  content: "";
+  position: absolute;
+  background: black;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 5s;
+}
+
+.container.dark::after {
+  opacity: 0.85;
+}
+
+.container.off::before {
+  filter: grayscale(1);
+}
+
+.bill {
+  animation: moveBill 1.5s ease-in-out alternate infinite;
+  z-index: 5;
+
+  & .hat-container {
+    filter: var(--shine-filter);
+    position: relative;
+    z-index: 5;
+
+    & .hat {
+      width: 90px;
+      height: 170px;
+      background: var(--dark-color);
+      clip-path: polygon(0 94%, 30% 94%, 30% 0, 70% 0, 70% 94%, 100% 94%, 100% 100%, 0 100%);
+    }
+  }
+
+  & .body-container {
+    filter: var(--shine-filter);
+    position: relative;
+    z-index: 2;
+    transform: translate(-54px, 58px);
+
+    & .triangle,
+    & .triangle::before,
+    & .triangle::after {
+      background: var(--body-color);
+      width: 200px;
+      height: 200px;
+      border-top-right-radius: 20%;
+    }
+
+    & .triangle::before,
+    & .triangle::after {
+      content: " ";
+      position: absolute;
+    }
+
+    & .triangle {
+      transform: rotate(-60deg) skewX(-30deg) scale(1, 0.866);
+    }
+
+    & .triangle::before {
+      transform: rotate(-135deg) skewX(-45deg) scale(1.4, 0.707) translate(0, -50%);
+    }
+
+    & .triangle::after {
+      transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.4) translate(50%);
+    }
+
+    & .body {
+      & .eye {
+        position: absolute;
+        z-index: 3;
+
+        &::before,
+        &::after {
+          --x: 35px;
+          --y: -150px;
+
+          content: "";
+          display: block;
+          background: var(--light-color);
+          width: 130px;
+          height: 120px;
+          border: 2px solid black;
+          border-radius: 60% / 60% 60%;
+          transform: translate(var(--x), var(--y));
+        }
+
+        &::before {
+          clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+        }
+
+        &::after {
+          --y: -303px;
+
+          clip-path: polygon(0 100%, 100% 100%, 100% 60%, 0 60%);
+          height: 125px;
+        }
+      }
+
+      & .pupil {
+        position: absolute;
+        background: black;
+        height: 64px;
+        width: 11px;
+        border-radius: 50%;
+        top: -130px;
+        left: 98px;
+
+        /* transform: translate(97px, -254px); */
+        z-index: 5;
+        animation: animatedEyes 2.5s infinite alternate;
+      }
+
+      & .eyelashes {
+        position: absolute;
+        width: 60%;
+        display: flex;
+        justify-content: space-around;
+        transform: translate(42px, -175px);
+
+        &.eyelashes-bottom {
+          transform: translate(42px, -48px) scale(1, -1);
+          z-index: 1;
+        }
+
+        & .eyelash-1 {
+          transform: rotate(-16deg) translate(0, 18px);
+        }
+
+        & .eyelash-2 {
+          transform: rotate(-10deg) translate(0, 5px);
+        }
+
+        & .eyelash-3 {
+          transform: rotate(10deg) translate(0, 5px);
+        }
+
+        & .eyelash-4 {
+          transform: rotate(10deg) translate(0, 16px);
+        }
+
+        & .eyelash {
+          width: 3px;
+          height: 22px;
+          background: black;
+        }
+      }
+
+      & .tie {
+        background: black;
+        width: 100px;
+        height: 50px;
+        position: absolute;
+        transform: translate(54px, -25px);
+        clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 50% 50%, 0 100%);
+      }
+
+      & .blocks {
+        position: absolute;
+        width: 262%;
+        transform: translate(-163px, -60px);
+        height: 134px;
+        clip-path: polygon(14% 93%, 28% 0, 74% 0, 88% 100%);
+        display: flex;
+        flex-direction: column;
+
+        & .row {
+          display: flex;
+        }
+
+        & .row:nth-child(odd) {
+          transform: translateX(50px);
+        }
+
+        & .block {
+          border: 1px solid var(--dark-body-color);
+          width: 80px;
+          height: 35px;
+        }
+      }
+    }
+
+    & .arm.left {
+      width: 125px;
+      height: 100px;
+      border-top: 15px solid black;
+      border-left: 15px solid black;
+      border-radius: 15px;
+      position: absolute;
+      transform: translate(-150px, 150px);
+
+      & .hand {
+        position: absolute;
+        width: 18px;
+        height: 32px;
+        background: black;
+        border-radius: 10px / 30px 15px;
+        transform: translate(-15px, 75px);
+
+        &::before {
+          content: "";
+          display: block;
+          background: black;
+          position: absolute;
+          width: 30px;
+          height: 10px;
+          border-radius: 10px;
+        }
+      }
+    }
+
+    & .arm.right {
+      width: 125px;
+      height: 100px;
+      border-top: 15px solid black;
+      border-left: 15px solid black;
+      border-radius: 15px;
+      position: absolute;
+      transform: translate(180px, -150px) scale(-1, -1);
+      z-index: -1;
+
+      & .hand {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: black;
+        border-radius: 10px / 40px 40px;
+        transform: translate(-15px, 75px);
+
+        & .fingers {
+          display: flex;
+          transform: translate(0, 15px);
+        }
+
+        & .finger-1 {
+          background: #111;
+          width: 10px;
+          height: 20px;
+          border-radius: 15px;
+          transform: translate(-2px, -8px);
+        }
+
+        & .finger-2 {
+          background: #111;
+          width: 10px;
+          height: 20px;
+          border-radius: 15px;
+          transform: translate(-2px, -8px);
+        }
+
+        & .finger-3 {
+          background: black;
+          width: 10px;
+          height: 35px;
+          border-radius: 15px;
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          background: black;
+          position: absolute;
+          width: 35px;
+          height: 10px;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  & .foot-container {
+    transform: translate(-58px, 115px);
+    filter: var(--shine-filter);
+
+    & .leg {
+      position: absolute;
+      width: 30px;
+      height: 50px;
+      border-left: 15px solid black;
+      border-bottom: 15px solid black;
+      border-radius: 5px;
+      transform: skew(0deg, -23deg);
+
+      &::after {
+        content: "";
+        background: black;
+        display: block;
+        width: 14px;
+        height: 40px;
+        border-radius: 10px;
+        transform: translate(20px, 50px);
+      }
+
+      &.right {
+        transform: skew(0deg, 23deg) scale(-1, 1) translate(-176px, -76px);
+      }
+    }
+  }
+}
+
+@keyframes animatedEyes {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes moveBill {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(0, 50px);
+  }
+}
+
+.hat-container,
+.left.arm,
+.right.arm,
+.eyelashes-bottom,
+.eyelashes-top,
+.eye,
+.tie,
+.left.leg,
+.right.leg {
+  opacity: 0;
+}
+
+.bill .on {
+  opacity: 1;
+  transition: opacity 2s linear;
+}
